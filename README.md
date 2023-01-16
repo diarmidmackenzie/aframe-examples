@@ -13,6 +13,14 @@ I also have a range of other A-Frame components in other repositories.  Over tim
 
 ## Components
 
+------------
+
+#### The components in this repo are now maintained in my [`aframe-components`](https://github.com/diarmidmackenzie/aframe-components) repo.  Components are left here so that they are available for pre-existing users (prior to January 2023) who use them via CDN.
+
+#### Please migrate to using the  [`aframe-components`](https://github.com/diarmidmackenzie/aframe-components) repo if you can.
+
+-----------
+
 
 
 ### Drawing & Rendering
