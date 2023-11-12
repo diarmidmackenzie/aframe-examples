@@ -6,6 +6,8 @@
     <script src="https://cdn.jsdelivr.net/npm/aframe-desktop-xr-hands@0.0.4/dist/desktop-xr-hands.min.js"></script>
     <script src="./src/hand-tracking-controls.js"></script>
     <script src="./src/hand-joint-position.js"></script>
+    <script src="./src/detect-calibration-pose.js"></script>
+    <script src="./src/hand-scale-adjuster.js"></script>
   </head>
   <body>
      <a-scene
@@ -20,13 +22,16 @@
         height="0.5"
         color="black"
         text="value:Let's adjust your hands to the correct size.
-                    Put your fingers together and hold your hands still.">
+                    Put your fingers together and hold your hands still."
+        detect-calibration-pose
+        report-calibration-pose
+        hand-scale-adjuster>
       </a-plane>
-      <a-entity id="rightHand"
+      <a-entity id="rhand"
                 desktop-xr-hands
                 hand-tracking-controls="hand:left">
       </a-entity>
-      <a-entity id="leftHand"
+      <a-entity id="lhand"
                 desktop-xr-hands
                 hand-tracking-controls="hand:right">
       </a-entity>
