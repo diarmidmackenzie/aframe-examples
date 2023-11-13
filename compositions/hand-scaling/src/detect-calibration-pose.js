@@ -87,7 +87,7 @@
 
       const {variationMeasurementTime} = this.data
 
-      for (ii = 0; ii < JOINTS.length; ii++) {
+      for (let ii = 0; ii < JOINTS.length; ii++) {
 
         if (!this.latestOffsets[ii]) {
           this.latestOffsets[ii] = new THREE.Vector3()
@@ -109,7 +109,7 @@
 
     checkDistance() {
 
-      for (ii = 0; ii < JOINTS.length; ii++) {
+      for (let ii = 0; ii < JOINTS.length; ii++) {
         if (this.latestOffsets[ii].length() > this.data.maxDistance) {
           return false
         }
@@ -120,7 +120,7 @@
 
     checkAlignment() {
 
-      for (ii = 0; ii < JOINTS.length; ii++) {
+      for (let ii = 0; ii < JOINTS.length; ii++) {
         if (Math.abs(this.latestOffsets[ii].y) > this.data.maxVerticalOffset) {
           return false
         }
@@ -133,9 +133,10 @@
 
       const {maxVariation} = this.data
       
-      for (ii = 0; ii < JOINTS.length; ii++) {
+      for (let ii = 0; ii < JOINTS.length; ii++) {
 
-        if (this.recentOffsetLengths[ii].variation() > maxVariation) {
+        if (!this.recentOffsetLengths[ii].startedPruning ||
+            this.recentOffsetLengths[ii].variation() > maxVariation) {
           return false
         }
       }
@@ -145,7 +146,7 @@
 
     renderDebugLines() {
 
-      for (ii = 0; ii < JOINTS.length; ii++) {
+      for (let ii = 0; ii < JOINTS.length; ii++) {
 
         const start = this.latestBones["left"][ii].position
         const end = this.latestBones["right"][ii].position
@@ -157,13 +158,15 @@
           
           if (Math.abs(this.latestOffsets[ii].y) <= this.data.maxVerticalOffset) {
             // aligned
-            if (this.recentOffsetLengths[ii].variation() < this.data.maxVariation) {
+            
+          if (this.recentOffsetLengths[ii].startedPruning &&
+              this.recentOffsetLengths[ii].variation() <= this.data.maxVariation) {
               // stable: green
               color = "#0f0"
             }
             else {
               // unstable: orange
-              color = "#880"
+              color = "#bb0"
             }
           }
           else {
@@ -192,6 +195,7 @@
       this.timestamps = []
       this.data = []
       this.duration = duration
+      this.startedPruning = false
     }
 
     add(data, timeNow) {
@@ -209,15 +213,18 @@
         const deleteCount = timestamps.filter(x => x < cutOff).length
         timestamps.splice(0, deleteCount)
         this.data.splice(0, deleteCount)
+        if (deleteCount > 0) {
+          this.startedPruning = true
+        }
       }
     }
 
     min() {
-      Math.min(...this.data)
+      return Math.min(...this.data)
     }
 
     max() {
-      Math.max(...this.data)
+      return Math.max(...this.data)
     }
 
     variation() {
