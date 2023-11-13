@@ -27,6 +27,7 @@
       maxVerticalOffset: {default: 0.005},
       maxVariation: {default: 0.005},
       variationMeasurementTime: {default: 1000},
+      debug: {default: false}
     },
 
     init() {
@@ -57,6 +58,10 @@
 
       this.getLatestBones()
       this.getLatestOffsets(time)
+
+      if (this.data.debug) {
+        this.renderDebugLines()
+      }
 
       if (this.checkDistance() && 
           this.checkAlignment() &&
@@ -136,6 +141,48 @@
       }
 
       return true
+    },
+
+    renderDebugLines() {
+
+      for (ii = 0; ii < JOINTS.length; ii++) {
+
+        const start = this.latestBones["left"][ii].position
+        const end = this.latestBones["right"][ii].position
+
+        let color
+
+        if (this.latestOffsets[ii].length() <= this.data.maxDistance) {
+          // within range
+          
+          if (Math.abs(this.latestOffsets[ii].y) <= this.data.maxVerticalOffset) {
+            // aligned
+            if (this.recentOffsetLengths[ii].variation() < this.data.maxVariation) {
+              // stable: green
+              color = "#0f0"
+            }
+            else {
+              // unstable: orange
+              color = "#880"
+            }
+          }
+          else {
+            // not aligned: red
+            color = "#f00"
+          }
+        }
+        else {
+          // out of range
+          color = "#333"
+        }
+
+        const s = start
+        const e = end
+        this.el.sceneEl.setAttribute(`line__debug-${ii}`, 
+                                     {start: `${s.x} ${s.y} ${s.z}`,
+                                      end: `${e.x} ${e.y} ${e.z}`,
+                                      color})
+      }
     }
   });
 
@@ -183,6 +230,10 @@
     init() {
       this.el.addEventListener("calibration-pose-detected", () => {
         this.el.setAttribute('text', 'value: POSE DETECTED!')
+
+        setTimeout(() => {
+          this.el.setAttribute('text', 'value: AWAITING POSE AGAIN...')
+        }, 2000)
       })
     }
   })
