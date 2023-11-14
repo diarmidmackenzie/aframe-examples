@@ -10,7 +10,9 @@
     "pinky-finger-tip"
   ]
 
-  const _vector = new THREE.Vector3()
+  const _wristsHVector = new THREE.Vector3()
+  const _gapHVector = new THREE.Vector3()
+  const _currentHandsWidthVector = new THREE.Vector3()
   const _up = new THREE.Vector3(0, 1, 0)
 
   AFRAME.registerComponent('hand-scale-adjuster', {
@@ -28,37 +30,57 @@
     scaleHands(e) {
   
       const offsets = e.detail
-      const hDeltas = offsets.map((vec) => vec.projectOnPlane(_up).length() / 2)
+      
+      const scaleAdjustment = this.estimateHandScale(this.data.leftHand,
+                                                     this.data.rightHand, 
+                                                     offsets)
 
       HANDS.forEach((hand) => {
         const handEl = this.data[hand + 'Hand']
-
-        const scale = this.estimateHandScale(handEl, hDeltas)
-        handEl.setAttribute('hand-tracking-controls', {scale: scale})
+        const currentScale = handEl.getAttribute('hand-tracking-controls').scale
+        const newScale = currentScale * scaleAdjustment
+        handEl.setAttribute('hand-tracking-controls', {scale: newScale})
       })
     },
   
-    estimateHandScale(hand, hDeltas) {
-  
-      const getBone = (name) => bones.find((b) => (b.name === name))
-      bones = hand.components['hand-tracking-controls'].bones
-      wrist = getBone("wrist")
+    estimateHandScale(leftHand, rightHand, offsets) {
+      /* We estimate hand scale by computing
+      - _wristsHVector: The horizontal distance between the wrists
+      - _gapHVector: The horizontal distance between the fingertips.
+      Then the scale factor to use is:
+      length(_wristsHVector - _gapHVector) / length(_wristsHVector)
+
+      Note that in cases where hand models are too large, the direction of
+      _gapHVector may be opposite to the direction of _wristsHVector,
+      so it's important to do the vector arithmetic *before* extracting lengths
+      (which loses direction information).
+      */
+
+      const getBone = (hand, name) => {
+        const bones = hand.components['hand-tracking-controls'].bones
+        return bones.find((b) => (b.name === name))
+      }
+      const leftWrist = getBone(leftHand, "wrist")
+      const rightWrist = getBone(rightHand, "wrist")
+
+      _wristsHVector.subVectors(rightWrist.position,
+                                leftWrist.position)
+      _wristsHVector.projectOnPlane(_up)
   
       const scaleFactors = []
-      JOINTS.forEach((jointName, index) => {
-        jointBone = getBone(jointName)
-        _vector.subVectors(wrist.position, jointBone.position)
-        _vector.projectOnPlane(_up)
-        const hOffset = _vector.length()
-        hDelta = hDeltas[index]
-        const scaleFactor = (hDelta + hOffset) / hOffset
+
+      for (let ii = 0; ii < JOINTS.length; ii++) {
+        _gapHVector.copy(offsets[ii]).projectOnPlane(_up)
+        _currentHandsWidthVector.subVectors(_wristsHVector, _gapHVector)
+        
+        const scaleFactor = (_wristsHVector.length() / _currentHandsWidthVector.length()) 
         scaleFactors.push(scaleFactor)
-        console.log(`Hand: ${hand.id}, Finger index: ${index}, scale: ${scaleFactor}`)
-      })
+        console.log(`Finger index: ${ii}, scale: ${scaleFactor}`)
+      }
 
       const meanScale = scaleFactors.reduce((a, b) => a + b) / scaleFactors.length
 
-      console.log(`Hand: ${hand.id}, Mean scale: ${meanScale}`)
+      console.log(`Mean scale: ${meanScale}`)
       return meanScale
     }
   })
