@@ -24,11 +24,11 @@
       leftHand: {type: 'selector', default: '#lhand'},
       rightHand: {type: 'selector', default: '#rhand'},
       maxDistance: {default: 0.05},
-      maxVerticalOffset: {default: 0.005},
-      maxVariation: {default: 0.005},
+      maxVerticalOffset: {default: 0.01},
+      maxVariation: {default: 0.01},
       variationMeasurementTime: {default: 1000},
       debug: {default: false},
-      colorAlignedStable: {default: 'green'},
+      colorAlignedStable: {default: '#0f0'},
       colorAlignedUnstable: {default: 'orange'},
       colorNotAligned: {default: 'red'},
       colorOutOfRange: {default: '#333'},
@@ -107,7 +107,8 @@
         }
         const offsetHistory = this.recentOffsetLengths[ii]
 
-        offsetHistory.add(offsetVector.length(), time)
+        const horizontalLength = (v) => Math.sqrt(v.x * v.x + v.z * v.x)
+        offsetHistory.add(horizontalLength(offsetVector), time)
       }
     },
 
