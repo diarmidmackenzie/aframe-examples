@@ -27,7 +27,11 @@
       maxVerticalOffset: {default: 0.005},
       maxVariation: {default: 0.005},
       variationMeasurementTime: {default: 1000},
-      debug: {default: false}
+      debug: {default: false},
+      colorAlignedStable: {default: 'green'},
+      colorAlignedUnstable: {default: 'orange'},
+      colorNotAligned: {default: 'red'},
+      colorOutOfRange: {default: '#333'},
     },
 
     init() {
@@ -161,22 +165,22 @@
             
           if (this.recentOffsetLengths[ii].startedPruning &&
               this.recentOffsetLengths[ii].variation() <= this.data.maxVariation) {
-              // stable: green
-              color = "#0f0"
+              // stable
+              color = this.data.colorAlignedStable
             }
             else {
-              // unstable: orange
-              color = "#bb0"
+              // unstable
+              color = this.data.colorAlignedUnstable
             }
           }
           else {
-            // not aligned: red
-            color = "#f00"
+            // not aligned
+            color = this.data.colorNotAligned
           }
         }
         else {
           // out of range
-          color = "#333"
+          color = this.data.colorOutOfRange
         }
 
         const s = start
