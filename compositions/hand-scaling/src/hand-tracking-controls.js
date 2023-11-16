@@ -81,9 +81,9 @@ AFRAME.registerComponent('hand-tracking-controls', {
     hand: {default: 'right', oneOf: ['left', 'right']},
     modelStyle: {default: 'mesh', oneOf: ['dots', 'mesh']},
     modelColor: {default: 'white'},
+    wireframe: {default: false},
     scale: {default: 1},
     wristAdjustment: {default: 0}
-
   },
 
   bindMethods: function () {
@@ -342,7 +342,8 @@ AFRAME.registerComponent('hand-tracking-controls', {
         primitive: 'sphere',
         radius: 1.0
       });
-      jointEl.setAttribute('material', {color: this.data.modelColor});
+      jointEl.setAttribute('material', {color: this.data.modelColor,
+                                        wireframe: this.data.wireframe});
       jointEl.object3D.visible = false;
       this.el.appendChild(jointEl);
       this.jointEls.push(jointEl);
@@ -363,7 +364,9 @@ AFRAME.registerComponent('hand-tracking-controls', {
     mesh.position.set(0, 0, 0);
     mesh.rotation.set(0, 0, 0);
     skinnedMesh.frustumCulled = false;
-    skinnedMesh.material = new THREE.MeshStandardMaterial({skinning: true, color: this.data.modelColor});
+    skinnedMesh.material = new THREE.MeshStandardMaterial({skinning: true,
+                                                           color: this.data.modelColor,
+                                                           wireframe: this.data.wireframe});
     this.el.setObject3D('mesh', mesh);
   }
 });
