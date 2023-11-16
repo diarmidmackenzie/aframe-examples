@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@56d77f99494e01b6918612c526ae514f45d178a4/dist/aframe-master.min.js"></script>
+    <!--<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/aframe-desktop-xr-hands@0.0.4/dist/desktop-xr-hands.min.js"></script>
+    <script src="../src/hand-tracking-controls.js"></script>
+    <script src="../src/pinch-adjust-hand-scale.js"></script>
+  </head>
+  <body>
+     <a-scene
+      zdesktop-xr-hands
+      renderer="colorManagement: true;"
+      vr-mode-ui="enterAREnabled: true; enterVREnabled: true">
+      <a-entity position="0 1.6 0" camera wasd-controls look-controls>
+      </a-entity>
+      <a-plane
+        position="0 1.8 -2"
+        width="2"
+        height="0.5"
+        color="black"
+        text="value:Let's adjust your hands to the correct size.
+                    Pinch with left hand to redue size, pinch with right hand to increase size."
+        pinch-adjust-hand-scale>
+      </a-plane>
+      <a-entity id="rhand"
+                zdesktop-xr-hands
+                hand-tracking-controls="hand:left">
+      </a-entity>
+      <a-entity id="lhand"
+                zdesktop-xr-hands
+                hand-tracking-controls="hand:right">
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
