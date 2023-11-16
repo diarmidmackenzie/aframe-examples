@@ -10,7 +10,7 @@
   </head>
   <body>
      <a-scene
-      desktop-xr-hands
+      zdesktop-xr-hands
       renderer="colorManagement: true;"
       vr-mode-ui="enterAREnabled: true; enterVREnabled: true">
       <a-entity position="0 1.6 0" camera wasd-controls look-controls>
@@ -26,12 +26,12 @@
         report-calibration-pose
         hand-scale-adjuster>
       </a-plane>
-      <a-entity id="rhand"
-                desktop-xr-hands
+      <a-entity id="lhand"
+                zdesktop-xr-hands
                 hand-tracking-controls="hand:left">
       </a-entity>
-      <a-entity id="lhand"
-                desktop-xr-hands
+      <a-entity id="rhand"
+                zdesktop-xr-hands
                 hand-tracking-controls="hand:right">
       </a-entity>
     </a-scene>
