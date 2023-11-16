@@ -3,7 +3,8 @@ AFRAME.registerComponent('pinch-smooth-hand-scale', {
  schema: {
   leftHand: {type: 'selector', default: '#lhand'},
   rightHand: {type: 'selector', default: '#rhand'},
-  increment: {default: 0.05}
+  increment: {default: 0.05},
+  enabled: {default: true}
  },
 
  init() {
@@ -35,6 +36,7 @@ AFRAME.registerComponent('pinch-smooth-hand-scale', {
  },
 
  pinchStarted(e) {
+  if (!this.data.enabled) return
   if (this.pinchingHand) return
 
   this.pinchingHand = e.target
@@ -42,6 +44,7 @@ AFRAME.registerComponent('pinch-smooth-hand-scale', {
  },
 
  pinchMoved(e) {
+  if (!this.data.enabled) return
   if (this.pinchingHand !== e.target) return
 
   const delta = e.detail.position.y - this.startY
@@ -50,6 +53,7 @@ AFRAME.registerComponent('pinch-smooth-hand-scale', {
  },
 
  pinchEnded(e) {
+  if (!this.data.enabled) return
   if (this.pinchingHand !== e.target) return
 
   this.pinchingHand = null

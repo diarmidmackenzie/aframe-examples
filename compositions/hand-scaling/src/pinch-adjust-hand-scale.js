@@ -3,7 +3,8 @@ AFRAME.registerComponent('pinch-adjust-hand-scale', {
  schema: {
   leftHand: {type: 'selector', default: '#lhand'},
   rightHand: {type: 'selector', default: '#rhand'},
-  increment: {default: 0.05}
+  increment: {default: 0.05},
+  enabled: {default: true}
  },
 
  init() {
@@ -15,10 +16,12 @@ AFRAME.registerComponent('pinch-adjust-hand-scale', {
  },
 
  leftPinch() {
+  if (!this.data.enabled) return
   this.adjustHands(1 - this.data.increment)
  },
 
  rightPinch() {
+  if (!this.data.enabled) return
   this.adjustHands(1 + this.data.increment)
  },
 
