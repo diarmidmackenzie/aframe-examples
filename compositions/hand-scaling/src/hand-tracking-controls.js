@@ -364,8 +364,7 @@ AFRAME.registerComponent('hand-tracking-controls', {
     mesh.position.set(0, 0, 0);
     mesh.rotation.set(0, 0, 0);
     skinnedMesh.frustumCulled = false;
-    skinnedMesh.material = new THREE.MeshStandardMaterial({skinning: true,
-                                                           color: this.data.modelColor,
+    skinnedMesh.material = new THREE.MeshStandardMaterial({color: this.data.modelColor,
                                                            wireframe: this.data.wireframe});
     this.el.setObject3D('mesh', mesh);
   }
