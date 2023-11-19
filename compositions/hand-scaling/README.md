@@ -150,6 +150,7 @@ Scaling down is limited to 10% of the original size (0.9m of movement) per gestu
 | maxVerticalOffset | The maximum vertical distance between two corresponding fingertips for them to be considered as "in pose".  Note this has to allow for variation in the WebXR hand data, even when fingers are completely still. | 0.01 (1cm) |
 | maxVariation | The maximum horizontal variation in the horizontal distance between two corresponding fingertips for them to be considered as "stable".  Note this has to allow for variation in the WebXR hand data, even when fingers are completely still. | 0.01 (1cm) |
 | variationMeasurementTime | The time period over which the horizontal distance between fingertips must be stable, to quality as stable. | 1000 (1sec) |
+| enabled | Whether or not the component should operate | true |
 | debug | Display connecting lines between fingertip pairs, indicating the current state of pose detection for each pair. | false |
 | colorAlignedStable | Color used in debug mode for finger-finger relations that are aligned & stable. | #0f0 |
 | colorAlignedUnstable | Color used in debug mode for finger-finger relations that are aligned but unstable. | orange |

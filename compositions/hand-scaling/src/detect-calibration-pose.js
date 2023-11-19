@@ -27,6 +27,7 @@
       maxVerticalOffset: {default: 0.01},
       maxVariation: {default: 0.01},
       variationMeasurementTime: {default: 1000},
+      enabled: {default: true},
       debug: {default: false},
       colorAlignedStable: {default: '#0f0'},
       colorAlignedUnstable: {default: 'orange'},
@@ -42,7 +43,7 @@
           this.left = this.data.leftHand.components['hand-tracking-controls'].bones
         })
       })
-      this.data.leftHand.addEventListener('model-loaded', () => {
+      this.data.rightHand.addEventListener('model-loaded', () => {
         // wait until hand-tracking-controls has processed the model-loaded event.
         setTimeout(() => {
           this.right = this.data.rightHand.components['hand-tracking-controls'].bones
@@ -59,6 +60,7 @@
 
     tick(time) {
       if (!this.left || !this.right) return
+      if (!this.data.enabled) return
 
       this.getLatestBones()
       this.getLatestOffsets(time)
