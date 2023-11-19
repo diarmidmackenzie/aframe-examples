@@ -2,26 +2,24 @@
 
 Various ways of handling hand scaling for WebXR.
 
-### Quick links
+### Quick Links to Demos
 
 - [Smooth manual adjustment](https://diarmidmackenzie.github.io/aframe-examples/compositions/hand-scaling/manual-smooth/)
 - [Incremental manual adjustment](https://diarmidmackenzie.github.io/aframe-examples/compositions/hand-scaling/manual-increments/)
 - [Automatic adjustment (experimental)](https://diarmidmackenzie.github.io/aframe-examples/compositions/hand-scaling/auto/)
 - [Automatic adjustment (experimental) - debug view](https://diarmidmackenzie.github.io/aframe-examples/compositions/hand-scaling/auto-debug/)
 
-
-
 ## Background
 
 The WebXR Hand Tracking APIs provide data about positions of joints in hands detected by hand tracking.
 
-However, they don't provide the real-world data.  Instead, they provide data that is [adjusted to provide a level of anonymization](https://www.w3.org/TR/webxr-hand-input-1/#privacy-security).
+However, they don't provide the real-world position data.  Instead, they provide data that is [adjusted to provide a level of anonymization](https://www.w3.org/TR/webxr-hand-input-1/#privacy-security).
 
-The WebXR specs permit rounding.  However current popular implementations (e.g. on the Meta browser) map the data to a single fixed-size hand model.  Given the large variation in hand sizes across all potential VR/AR headset users, this inevitably means that the hand models may be significantly larger or smaller than some users' hands.
+The WebXR specs permit rounding of data to an approximate hand size.  However current popular implementations (e.g. on the Meta browser) map the data to a single fixed-size hand model.  This inevitably means that the hand models may be significantly larger or smaller than some users' hands.
 
 This isn't usually too problematic in VR, but in AR (aka Mixed Reality or Passthrough), it can make interactions feel clumsy, and break immersion, if the hand model isn't a good match for the user's real hands.
 
-[This page](https://diarmidmackenzie.github.io/aframe-examples/compositions/hand-scaling/) offers various options for adjusting hand scale:
+The demos on this page offers various options for adjusting hand scale:
 
 - Manual adjustment mechanisms, where the user explicitly sets their desired hand size
 - An experimental "automatic" adjustment mechanism.
