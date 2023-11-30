@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+      <script src="../index.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/MozillaReality/ammo.js@8bbc0ea/builds/ammo.wasm.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.2/dist/aframe-physics-system.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/diarmidmackenzie/aframe-drag-controls@9d8aa06/index.js"></script>
+      <link rel="stylesheet" href="../../../styles.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.5.0/socket.io.slim.js"></script>
+      <script src="https://aframe-components-naf-server.glitch.me/easyrtc/easyrtc.js"></script>
+      <script src="https://unpkg.com/networked-aframe@^0.11.0/dist/networked-aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene networked-scene="serverURL: aframe-components-naf-server.glitch.me;
+                              room: physics;
+                              adapter: wseasyrtc"
+             stats physics="driver: ammo; stats: panel">
+      <a-assets>
+        <!-- Ball -->
+        <template id="ball-template">
+          <a-entity class="draggable"
+                    geometry="primitive: sphere; radius: 0.5"
+                    material="color:#EF2D5E"
+                    physics-grabbable>
+          </a-entity>
+        </template>
+        <template id="cone-template">
+          <a-entity class="draggable"
+                    geometry="primitive: cone; radiusBottom: 0.5"
+                    material="color:#00ff00"
+                    physics-grabbable>
+          </a-entity>
+        </template>
+        <template id="cylinder-template">
+          <a-entity class="draggable"
+                    geometry="primitive: cylinder; radius: 0.5"
+                    material="color:#FFC65D"
+                    physics-grabbable>
+          </a-entity>
+        </template>
+
+        <template id="container-template">
+          <a-entity></a-entity>
+        </template>
+
+      </a-assets>
+      <a-entity camera position="0 1.6 5"
+                drag-controls="objects: .draggable"></a-entity>
+      <a-entity>
+        <!--box to keep things contained-->
+        <a-entity rotation="20 0 0">
+          <a-box color="#aaa" width="7" depth="7" height="2" position="0 -1 0" ammo-body="type: static" ammo-shape></a-box>
+          <a-box color="#aaa" width="1" depth="7" height="20" position="-3 10 0" ammo-body="type: static" ammo-shape></a-box>
+          <a-box color="#aaa" width="1" depth="7" height="20" position="3 10 0" ammo-body="type: static" ammo-shape></a-box>
+          <a-box color="#aaa" width="7" depth="1" height="20" position="0 10 -3" ammo-body="type: static" ammo-shape></a-box>
+          <a-box color="#aaa" width="7" depth="1" height="20" position="0 10 3" ammo-body="type: static" ammo-shape visible="false"></a-box>
+          <a-box color="#aaa" width="7" depth="7" height="10" position="0 25 0" ammo-body="type: static" ammo-shape></a-box>
+        </a-entity>
+
+        <a-entity id="ball"
+                networked="template:#ball-template; persistent: true; networkId:sphere; owner: scene"
+                hidden-until-ownership-changed
+                position="-1 3.75 -1">
+        </a-entity>
+        <a-entity id="cylinder"
+                networked="template:#cylinder-template; persistent: true; networkId:cylinder; owner: scene"
+                hidden-until-ownership-changed
+                position="1 4 1">
+        </a-entity>
+        <a-entity id="cone"
+                networked="template:#cone-template; persistent: true; networkId:cone; owner: scene"
+                hidden-until-ownership-changed
+                position="0 4 0">
+      </a-entity> 
+    </a-scene>
+    <script>
+      // Called by Networked-Aframe when connected to server
+      function onConnect() {
+        console.log('onConnect', new Date());
+      }
+    </script>
+  </body>
