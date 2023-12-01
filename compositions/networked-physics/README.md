@@ -15,7 +15,7 @@ This shows the following:
 - in VR, objects can be manipulated using [`aframe-laser-manipulation`](https://diarmidmackenzie.github.io/aframe-components/components/laser-manipulation/).  This uses `controlMethod: transform` to avoid issues with re-parenting (see below)
 - additional clients can connect and disconnect, without disrupting the scene.
 
-<video src="https://github.com/diarmidmackenzie/aframe-examples/assets/16045703/ce573717-2f7d-4b35-a9e0-4d59f93455a3">
+<video src="https://github.com/diarmidmackenzie/aframe-examples/assets/16045703/ce573717-2f7d-4b35-a9e0-4d59f93455a3" controls="controls" style="max-width: 730px;">
 </video>
 
 
