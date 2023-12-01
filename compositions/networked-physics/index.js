@@ -19,15 +19,12 @@ AFRAME.registerComponent('physics-grabbable', {
   },
 
   grabStart() {
-
     this.becomeKinematic()
     NAF.utils.takeOwnership(this.el)
   },
 
   grabEnd() {
-    // work around bug in laser-manipulation, where release event is triggered
-    // before the entity is re-parented to the scene.
-    setTimeout(() => this.becomeDynamic(), 100)
+    this.becomeDynamic()
   },
 
   becomeDynamic() {
