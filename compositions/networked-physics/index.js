@@ -1,18 +1,8 @@
-AFRAME.registerSystem('networked-physics', {
-
-  init() {
-    NAF.connection.onConnect(() => {
-      this.el.sceneEl.emit('naf-connected')
-    })
-  }
-})
-
-
 AFRAME.registerComponent('physics-grabbable', {
 
   init() {
 
-    this.el.setAttribute('networked-physics', '')
+    this.el.setAttribute('networked-body', '')
 
     this.el.addEventListener("dragstart", this.grabStart.bind(this));
     this.el.addEventListener("dragend", this.grabEnd.bind(this));
@@ -28,21 +18,30 @@ AFRAME.registerComponent('physics-grabbable', {
   },
 
   becomeDynamic() {
-
     console.log(`${this.el.id} becoming dynamic`);
-    this.el.setAttribute('networked-physics', 'kinematic: false')
+    this.el.setAttribute('networked-body', 'kinematic: false')
   },
 
   becomeKinematic() {
     console.log(`${this.el.id} becoming kinematic`);
-    this.el.setAttribute('networked-physics', 'kinematic: true')
+    this.el.setAttribute('networked-body', 'kinematic: true')
   }
 });
 
-AFRAME.registerComponent('networked-physics', {
+AFRAME.registerSystem('networked-body', {
+
+  init() {
+    NAF.connection.onConnect(() => {
+      this.el.sceneEl.emit('naf-connected')
+    })
+  }
+})
+
+AFRAME.registerComponent('networked-body', {
 
   schema: {
-    kinematic: {default: false}, // better named (controlled???)
+    kinematic: {default: false},
+    ownershipTimer: {default: 1000}
   },
 
   init() {
@@ -102,10 +101,9 @@ AFRAME.registerComponent('networked-physics', {
         NAF.utils.takeOwnership(this.el)
         this.update()
       }
-    }, 1000)
+    }, this.data.ownershipTimer)
   }
 });
-
 
 AFRAME.registerComponent('hidden-until-ownership-changed', {
 
