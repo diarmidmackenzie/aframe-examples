@@ -38,3 +38,10 @@ Various ways of handling hand scaling for WebXR.
 
 [Details here](https://diarmidmackenzie.github.io/aframe-examples/compositions/hand-scaling/README.md)
 
+
+
+#### Networked Physics
+
+Networked A-Frame + Physics
+
+[Details here](https://diarmidmackenzie.github.io/aframe-examples/compositions/networked-physics/README.md)
