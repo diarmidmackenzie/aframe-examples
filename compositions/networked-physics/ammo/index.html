@@ -8,7 +8,7 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.5.0/socket.io.slim.js"></script>
       <script src="https://aframe-components-naf-server.glitch.me/easyrtc/easyrtc.js"></script>
       <script src="https://unpkg.com/networked-aframe@^0.11.0/dist/networked-aframe.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/aframe-laser-manipulation@0.1.1/dist/laser-manipulation.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/aframe-laser-manipulation@0.2.0/dist/laser-manipulation.min.js"></script>
       <script src="../index.js"></script>
       <link rel="stylesheet" href="../../../styles.css">
   </head>
@@ -58,7 +58,8 @@
           raycaster="objects: .draggable; lineColor: red; lineOpacity: 0.5"
           laser-manipulation="grabEvents: true;
                               grabEvent: dragstart;
-                              releaseEvent: dragend"
+                              releaseEvent: dragend;
+                              controlMethod: transform"
           thumbstick-states__right="controller:#rhand;
                                     tBindings:moving-in,moving-out"
           oculus-touch-controls="hand: right">
