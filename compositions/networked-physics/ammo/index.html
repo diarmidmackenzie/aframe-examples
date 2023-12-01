@@ -13,6 +13,16 @@
       <link rel="stylesheet" href="../../../styles.css">
   </head>
   <body>
+    <div class="text-overlay">
+      <p>Networked physics using NAF and Ammo driver</p>
+      <p>Open the window in multiple browsers to observe networking.</p>
+      <p>Use the mouse (or laser in VR) to drag the shapes around.</p>
+    </div>
+        <a class="code-link"
+        target="_blank"
+        href="https://github.com/diarmidmackenzie/aframe-examples/blob/main/compositions/networked-physics/ammo/index.html">
+        view code
+    </a>
     <a-scene networked-scene="serverURL: aframe-components-naf-server.glitch.me;
                               room: physics;
                               adapter: wseasyrtc"
@@ -40,10 +50,6 @@
                     physics-grabbable>
           </a-entity>
         </template>
-
-        <template id="container-template">
-          <a-entity></a-entity>
-        </template>
       </a-assets>
       <a-entity id="rig"
                 position="0 0 5">
@@ -65,6 +71,29 @@
           oculus-touch-controls="hand: right">
         </a-entity>
       </a-entity>
+      <a-entity id="signboard"
+                position="0 2 -1">
+        <a-text
+            position="-1.9 0 0"
+            width="3.8"
+            height="1"
+            color="white"
+            text="lineHeight: 80;
+                  wrapCount: 50;
+                  value: VR controls
+                         Use the laser pointer + trigger to drag the shapes around.
+                         Use the thumbstick to move a grabbed shape forwards or backwards.">
+        </a-text>
+        <a-box position="0 0 -0.5" 
+               color="black"
+               width="4"
+               depth="1"
+               height="1"
+               ammo-body="type: static"
+               ammo-shape>
+        </a-box>
+      </a-entity>
+
       <!--box to keep things contained-->
       <a-entity rotation="20 0 0">
         <a-box color="#aaa" width="7" depth="7" height="2" position="0 -1 0" ammo-body="type: static" ammo-shape></a-box>
