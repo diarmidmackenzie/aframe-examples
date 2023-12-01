@@ -15,7 +15,10 @@ This shows the following:
 - in VR, objects can be manipulated using [`aframe-laser-manipulation`](https://diarmidmackenzie.github.io/aframe-components/components/laser-manipulation/).  This uses `controlMethod: transform` to avoid issues with re-parenting (see below)
 - additional clients can connect and disconnect, without disrupting the scene.
 
-https://github.com/diarmidmackenzie/aframe-examples/assets/16045703/ce573717-2f7d-4b35-a9e0-4d59f93455a3
+<video src="https://github.com/diarmidmackenzie/aframe-examples/assets/16045703/ce573717-2f7d-4b35-a9e0-4d59f93455a3">
+</video>
+
+
 
 The example currently uses a single global room, so if you happen to join at the same time as another user anywhere in the world, you'll be in session with them.  Private rooms can easily be implemented in NAF, but it simplifies the demo to have a single global room.
 
@@ -156,3 +159,4 @@ Some key things it would be nice to add:
 - An example showing spawning of persistent physics entities.
 - An example showing constraints, and whether / how these can work between bodies being simulated by independent clients.
 
+​	
