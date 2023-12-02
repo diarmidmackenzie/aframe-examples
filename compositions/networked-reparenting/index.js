@@ -2,21 +2,36 @@
 AFRAME.registerComponent('object-parent', {
 
   schema: {
-      parentId:     {type: 'string'},
+      parentId:        {type: 'string'},
+      parentNetworkId: {type: 'string'},
       position:   {type: 'string', oneOf: ['absolute', 'relative'], default: 'relative'}
   },
 
   update() {
 
+    // parentNetworkId takes precedence over parentId
+    let newParentEl
+    if (this.data.parentNetworkId) {
+      console.log(this.data.parentNetworkId)
+      newParentEl = NAF.entities.entities[this.data.parentNetworkId]
+    }
+    else {
       const parentId = this.data.parentId
       const matches = document.querySelectorAll(`#${parentId}`)
       if (matches.length > 1) {
           console.warn(`object-parent matches duplicate entities for new parent ${parent.id}`)
       }
+      newParentEl = document.getElementById(parentId)
+    }
 
-      const newParent = document.getElementById(parentId).object3D
-      this.reparent(newParent)
-      
+    const newParent = newParentEl.object3D
+    this.reparent(newParent)
+
+    const networkId = newParentEl.components?.networked.data.networkId
+
+    if (networkId) {
+      this.el.setAttribute('object-parent', `parentNetworkId: ${networkId}`)
+    }
   },
 
   remove() {
