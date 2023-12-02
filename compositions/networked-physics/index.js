@@ -101,7 +101,7 @@ AFRAME.registerComponent('networked-body', {
         NAF.utils.takeOwnership(this.el)
         this.update()
       }
-    }, this.data.ownershipTimer)
+    }, this.data.ownershipTimer)  
   }
 });
 

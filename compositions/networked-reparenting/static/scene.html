@@ -9,13 +9,14 @@
       <script src="https://cdn.jsdelivr.net/gh/networked-aframe/networked-aframe@master/examples/js/spawn-in-circle.component.js"></script>
       <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
       <script src="../index.js"></script>
+      <script src="../schemas.js"></script>
       <link rel="stylesheet" href="../../../styles.css">
   </head>
   <body>
     <div class="text-overlay">
       <p>NAF replication of re-parented objects</p>
       <p>Open the window in multiple browsers to observe networking.</p>
-      <p>Use the mouse (or laser in VR) to drag the shapes around.</p>
+      <p>Each avatar carries a red box in their "right hand".</p>
     </div>
         <a class="code-link"
         target="_blank"
@@ -49,6 +50,11 @@
           </a-entity>
         </a-entity>
       </template>
+
+      <template id="box-template">
+        <a-box>
+        </a-box>
+      </template>
       <!-- /Templates -->
     </a-assets>
       <a-entity id="rig">
@@ -64,10 +70,11 @@
         </a-entity>
       </a-entity>
       <a-box
+          networked="template:#box-template"
           color="red"
           scale="0.1 0.1 0.1"
           position="0.25 -0.2 -0.25"
-          object-parent="parent:#player; position: relative">
+          object-parent="parentId:player; position: relative">
       </a-box>
       <a-entity environment="preset:forest"></a-entity>
     </a-scene>

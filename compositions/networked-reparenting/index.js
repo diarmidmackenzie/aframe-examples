@@ -2,18 +2,19 @@
 AFRAME.registerComponent('object-parent', {
 
   schema: {
-      parent:     {type: 'selector'},
+      parentId:     {type: 'string'},
       position:   {type: 'string', oneOf: ['absolute', 'relative'], default: 'relative'}
   },
 
   update() {
 
-      const matches = document.querySelectorAll(`#${parent.id}`)
+      const parentId = this.data.parentId
+      const matches = document.querySelectorAll(`#${parentId}`)
       if (matches.length > 1) {
           console.warn(`object-parent matches duplicate entities for new parent ${parent.id}`)
       }
 
-      const newParent = this.data.parent.object3D
+      const newParent = document.getElementById(parentId).object3D
       this.reparent(newParent)
       
   },
