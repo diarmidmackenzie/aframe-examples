@@ -12,8 +12,19 @@ AFRAME.registerComponent('object-parent', {
     // parentNetworkId takes precedence over parentId
     let newParentEl
     if (this.data.parentNetworkId) {
-      console.log(this.data.parentNetworkId)
+      //console.log(this.data.parentNetworkId)
       newParentEl = NAF.entities.entities[this.data.parentNetworkId]
+      if (!newParentEl) {
+        // race condition where parent gets replicated after the child that refers to it.
+        document.body.addEventListener('entityCreated', (e) => {
+          const newEl = e.detail.el
+          if (newEl.components.networked.data.networkId === this.data.parentNetworkId) {
+            console.assert(NAF.entities.entities[this.data.parentNetworkId])
+            this.update()
+          }
+        })
+        return
+      }
     }
     else {
       const parentId = this.data.parentId
@@ -27,10 +38,15 @@ AFRAME.registerComponent('object-parent', {
     const newParent = newParentEl.object3D
     this.reparent(newParent)
 
-    const networkId = newParentEl.components?.networked.data?.networkId
+    const networkId = newParentEl.components?.networked?.data?.networkId
 
     if (networkId) {
       this.el.setAttribute('object-parent', `parentNetworkId: ${networkId}`)
+    }
+    else {
+      // race condition where child is initialized before the parent it refers to.
+      console.assert(!newParentEl.hasLoaded)
+      newParentEl.addEventListener('loaded', () => this.update(), {once: true})
     }
   },
 
