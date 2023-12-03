@@ -26,6 +26,8 @@ NAF.schemas.getComponents = (template) => {
         }
       ]
     });
+  }
+  if (!NAF.schemas.hasTemplate('#box-template')) {
     NAF.schemas.add({
       template: '#box-template',
       components: [

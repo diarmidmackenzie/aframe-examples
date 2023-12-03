@@ -4,7 +4,7 @@ AFRAME.registerComponent('object-parent', {
   schema: {
       parentId:        {type: 'string'},
       parentNetworkId: {type: 'string'},
-      position:   {type: 'string', oneOf: ['absolute', 'relative'], default: 'relative'}
+      position:   {type: 'string', oneOf: ['absolute', 'relative'], default: 'absolute'}
   },
 
   update() {
@@ -27,7 +27,7 @@ AFRAME.registerComponent('object-parent', {
     const newParent = newParentEl.object3D
     this.reparent(newParent)
 
-    const networkId = newParentEl.components?.networked.data.networkId
+    const networkId = newParentEl.components?.networked.data?.networkId
 
     if (networkId) {
       this.el.setAttribute('object-parent', `parentNetworkId: ${networkId}`)
