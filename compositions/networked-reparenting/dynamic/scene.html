@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/diarmidmackenzie/aframe-drag-controls@9d8aa06/index.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.5.0/socket.io.slim.js"></script>
+      <script src="https://aframe-components-naf-server.glitch.me/easyrtc/easyrtc.js"></script>
+      <script src="https://unpkg.com/networked-aframe@^0.11.0/dist/networked-aframe.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/aframe-connecting-line@0.1.0/index.min.js"></script>
+      <script src="../object-parent.js"></script>
+      <script src="./toggle-parent-on-click.js"></script>
+      <script src="./networked-draggable.js"></script>
+      <script src="./schemas.js"></script>
+      <link rel="stylesheet" href="../../../styles.css">
+  </head>
+  <body>
+    <button id="parent-button"
+            style="position: fixed;
+                   right: 50px;
+                   bottom: 150px;
+                   width: 150px;
+                   height: 50px;
+                   z-index: 10">
+    </button>
+    <a-scene networked-scene="serverURL: aframe-components-naf-server.glitch.me;
+                              room: reparenting-dynamic;
+                              adapter: wseasyrtc">
+      <a-assets>
+        <!-- Ball -->
+        <template id="ball-template">
+          <a-entity class="draggable"
+                    geometry="primitive: sphere; radius: 0.5"
+                    networked-draggable>
+          </a-entity>
+        </template>
+      </a-assets>
+      <a-entity id="rig"
+                position="0 0 5">
+        <a-entity camera position="0 1.6 0"
+                  drag-controls="objects: .draggable">
+        </a-entity>
+      </a-entity>
+
+      <a-entity id="ball1"
+              networked="template:#ball-template; persistent: true; networkId:sphere1; owner: scene"
+              material = "color:red"
+              position="-1 3 0">
+      </a-entity>
+      <a-entity id="ball2"
+              networked="template:#ball-template; persistent: true; networkId:sphere2; owner: scene"
+              position="1 3 0"
+              material = "color:blue"
+              toggle-parent-on-click="button: #parent-button; parent: #ball1; debug: true">
+      </a-entity>
+    </a-scene>
+  </body>
