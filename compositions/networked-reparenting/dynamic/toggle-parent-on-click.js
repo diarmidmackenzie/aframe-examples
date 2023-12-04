@@ -18,8 +18,8 @@ AFRAME.registerComponent('toggle-parent-on-click', {
 
     NAF.utils.takeOwnership(this.el)
 
-    if (this.el.hasAttribute('object-parent')) {
-      this.el.removeAttribute('object-parent')
+    if (this.hasParent()) {
+      this.el.setAttribute('object-parent', 'parentId:;parentNetworkId:')
       this.el.removeAttribute('connecting-line');
       this.data.button.innerHTML = "Parent"
     }
@@ -33,9 +33,15 @@ AFRAME.registerComponent('toggle-parent-on-click', {
     }
   },
 
+  hasParent() {
+    const parentAttr = this.el.getAttribute('object-parent')
+    return (parentAttr && (!!parentAttr.parentId || !!parentAttr.parentNetworkId))
+  },
+
   tick() {
 
-    if (this.el.hasAttribute('object-parent')) {
+    const parentAttr = this.el.getAttribute('object-parent')
+    if (this.hasParent()) {
       this.data.button.innerHTML = "Unparent"
     }
     else {

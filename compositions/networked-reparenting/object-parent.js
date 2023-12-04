@@ -9,6 +9,14 @@ AFRAME.registerComponent('object-parent', {
 
   update() {
 
+    if (!this.data.parentId && !this.data.parentNetworkId) {
+      // specifying no parent is equivalent to removing the component.
+      // This is needed for NAF, which doesn't replicate removal of attributes in a schema,
+      // but only changes to the property values of an attibute.
+      this.remove()
+      return
+    }
+
     // parentNetworkId takes precedence over parentId
     let newParentEl
     if (this.data.parentNetworkId) {
@@ -76,7 +84,6 @@ AFRAME.registerComponent('object-parent', {
     }
 
     //console.log(`Reparenting ${object.el.id} from ${objectEl(oldParent).id} to ${objectEl(newParent).id}`);
-    
     if (this.data.position === 'absolute') {
       newParent.attach(object);
     }
