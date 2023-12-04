@@ -45,3 +45,10 @@ Various ways of handling hand scaling for WebXR.
 Networked A-Frame + Physics
 
 [Details here](https://diarmidmackenzie.github.io/aframe-examples/compositions/networked-physics/README.md)
+
+
+#### Networked Reparenting
+
+Networked A-Frame + Reparenting using `object-parent``
+
+[Details here](https://diarmidmackenzie.github.io/aframe-examples/compositions/networked-reparenting/README.md)
