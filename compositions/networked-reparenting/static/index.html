@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>NAF replication of re-parented objects</title>
     <meta name="description" content="NAF replication of re-parented objects"/>
-
+    <link rel="stylesheet" href="../../../styles.css">
     <style>
       iframe {
         width: 50%;
@@ -25,6 +25,16 @@
     </style>
   </head>
   <body>
+    <div class="text-overlay">
+      <p>NAF replication of re-parented objects</p>
+      <p>The red and green boxes carried by each avatar are not children of the avatars in the HTML scene graph, but are re-parented to 
+         the avatars using the 'object-parent' component, which is replicated by NAF.</p>
+    </div>
+        <a class="code-link"
+        target="_blank"
+        href="https://github.com/diarmidmackenzie/aframe-examples/blob/main/compositions/networked-reparenting/ammo/index.html">
+        view code
+    </a>
     <iframe class="left" src="scene.html"></iframe>
     <iframe class="right" src="scene.html"></iframe>
   </body>
