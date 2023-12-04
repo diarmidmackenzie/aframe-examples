@@ -90,6 +90,8 @@ AFRAME.registerComponent('object-parent', {
     else {
       newParent.add(object);
     }
-    
+
+    // Clear Lerp buffer to remove out-dated position information.
+    this.el.components.networked.removeLerp();
   },
 });
