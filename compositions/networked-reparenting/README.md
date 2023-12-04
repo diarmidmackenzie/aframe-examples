@@ -2,7 +2,7 @@
 
 ## Networked Reparenting
 
-These examples show integration of [Networked A-Frame (NAF)](https://github.com/networked-aframe) with object reparenting
+These examples show integration of [Networked A-Frame (NAF)](https://github.com/networked-aframe) with object reparenting (i.e. arranging the Three.js scene graph differently from the A-Frame HTML scene graph)
 
 We use a [modified version](https://github.com/diarmidmackenzie/aframe-examples/tree/main/compositions/networked-parenting/object-parent.js) of the [`object-parent` component](https://diarmidmackenzie.github.io/aframe-components/components/object-parent/) that has been extended to work together with NAF (at some point I hope to fold these changes back into an updated version of `object-parent`)
 
