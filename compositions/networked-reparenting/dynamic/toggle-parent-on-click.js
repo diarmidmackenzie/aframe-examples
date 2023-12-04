@@ -20,16 +20,10 @@ AFRAME.registerComponent('toggle-parent-on-click', {
 
     if (this.hasParent()) {
       this.el.setAttribute('object-parent', 'parentId:;parentNetworkId:')
-      this.el.removeAttribute('connecting-line');
       this.data.button.innerHTML = "Parent"
     }
     else {
       this.el.setAttribute('object-parent', `parentId: ${this.data.parent.id}`)
-
-      if (this.data.debug) {
-        this.el.setAttribute('connecting-line', `start: #${this.el.id};
-                                                 end: #${this.data.parent.id}`)
-      }
     }
   },
 
@@ -43,10 +37,14 @@ AFRAME.registerComponent('toggle-parent-on-click', {
     const parentAttr = this.el.getAttribute('object-parent')
     if (this.hasParent()) {
       this.data.button.innerHTML = "Unparent"
+      if (this.data.debug) {
+        this.el.setAttribute('connecting-line', `start: #${this.el.id};
+                                                 end: #${this.data.parent.id}`)
+      }
     }
     else {
       this.data.button.innerHTML = "Parent"
+      this.el.removeAttribute('connecting-line');
     }
-
   }
 })
