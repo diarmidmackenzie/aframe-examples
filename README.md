@@ -36,7 +36,7 @@ Wrap a virtual gift (any PNG image), for desktop or mobile (not VR)
 
 Various ways of handling hand scaling for WebXR.
 
-[Details here](https://diarmidmackenzie.github.io/aframe-examples/compositions/hand-scaling/README.md)
+[Details here](https://diarmidmackenzie.github.io/aframe-examples/compositions/hand-scaling/)
 
 
 
@@ -44,11 +44,11 @@ Various ways of handling hand scaling for WebXR.
 
 Networked A-Frame + Physics
 
-[Details here](https://diarmidmackenzie.github.io/aframe-examples/compositions/networked-physics/README.md)
+[Details here](https://diarmidmackenzie.github.io/aframe-examples/compositions/networked-physics/)
 
 
 #### Networked Reparenting
 
 Networked A-Frame + Reparenting using `object-parent``
 
-[Details here](https://diarmidmackenzie.github.io/aframe-examples/compositions/networked-reparenting/README.md)
+[Details here](https://diarmidmackenzie.github.io/aframe-examples/compositions/networked-reparenting/)
